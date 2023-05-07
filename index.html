@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/assets/img/favicon.svg" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/css/main.css">
+    <title>Farmacia - Registro de Compras</title>
+</head>
+
+<body>
+
+    <div class="main-content">
+        <aside class="aside">
+            <header>
+                <img src="/assets/img/Logo.svg" alt="logo">
+            </header>
+            <section class="menu">
+                <article class="option">
+                    <a href="#" class="active">
+                        <img src="/assets/img/icon/buy_icon.svg" alt="buy_icon">
+                        Registro de Compras
+                    </a>
+                </article>
+                <article class="option">
+                    <a href="#">
+                        <img src="/assets/img/icon/sell_icon.svg" alt="buy_icon">
+                        Registro de Ventas
+                    </a>
+                </article>
+                <article class="option">
+                    <a href="#">
+                        <img src="/assets/img/icon/stock_icon.svg" alt="buy_icon">
+                        Existencias
+                    </a>
+                </article>
+                <article class="option">
+                    <a href="#">
+                        <img src="/assets/img/icon/dashboard_icon.svg" alt="buy_icon">
+                        Dashboard
+                    </a>
+                </article>
+            </section>
+            <section class="sub-menu">
+                <article class="option">
+                    <a href="http://127.0.0.1:5500/auth/register.html">
+                        <img src="/assets/img/icon/register_icon.svg" alt="buy_icon">
+                        Registrar usuario
+                    </a>
+                </article>
+                <article id="logout" class="option">
+                    <a href="#">
+                        <img src="/assets/img/icon/logout_icon.svg" alt="buy_icon">
+                        Salir
+                    </a>
+                </article>
+            </section>
+        </aside>
+        <main class="main">
+            <header>
+                <article class="main-title">
+                    <img src="/assets/img/icon/buy_black_icon.svg" alt="buy_icon">
+                    Registro de Compras
+                </article>
+            </header>
+            <div class="main-content">
+                <div class="buy-register">
+                    <header>
+                        <div id="search" class="search">
+                            <input id="find" type="text" placeholder="Buscar...">
+                            <div class="btn-circle">
+                                <img src="/assets/img/icon/search_icon.svg" alt="search icon">
+                            </div>
+                        </div>
+                        <a class="btn" href="http://127.0.0.1:5500/register/create.html">
+                            Agregar
+                        </a>
+                    </header>
+                    <div class="table-content">
+                        <table class="register-table">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>Nº.F</th>
+                                    <th>F.Entrada</th>
+                                    <th>Nombre</th>
+                                    <th>Categoría</th>
+                                    <th>Descripción</th>
+                                    <th>Laboratorio</th>
+                                    <th>Cantidad</th>
+                                    <th>Almacen</th>
+                                    <th>C.U</th>
+                                    <th>C.T</th>
+                                    <th>F.Venc</th>
+                                </tr>
+                            </thead>
+                            <tbody id="items-list"></tbody>
+                        </table>
+                        <p id="message"></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/main.js" type="module"></script>
+
+</body>
+
+</html>

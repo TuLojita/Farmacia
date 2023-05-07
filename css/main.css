@@ -1,0 +1,384 @@
+:root {
+    --main-color: #F87171;
+    --gray-1: #64748B;
+    --gray-2: #495A74;
+    --gray-3: #334155;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/** Globals **/
+
+body {
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+}
+
+p, a, h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    width: 100%;
+    display: block;
+}
+
+p,
+label {
+    color: var(--gray-1)
+}
+
+a {
+    text-decoration: none;
+}
+
+.btn {
+    border: none;
+    padding: 12px 16px;
+    border-radius: 4px;
+    background-color: var(--main-color);
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #e05c5c;
+}
+
+.btn-circle {
+    min-width: 36px;
+    min-height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: all .2s;
+}
+
+.btn-circle img {
+    width: 20px;
+    height: 20px;
+}
+
+.btn-circle:hover {
+    background-color: rgba(100, 116, 139, 0.1);
+}
+
+/** Login **/
+.login-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 64px;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    padding: 16px;
+    position: relative;
+    background-color: #f8fafc;
+}
+
+.content-any {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 64px;
+    align-items: center;
+    width: 100%;
+    padding: 16px;
+    position: relative;
+    background-color: #f8fafc;
+}
+
+.content-any img {
+    margin-top: 40px;
+}
+
+.login-content img {
+    width: 200px;
+}
+
+.login,
+.create {
+    border: 1px solid #ccc;
+    padding: 40px 24px;
+    border-radius: 8px;
+    max-width: 300px;
+    width: 100%;
+    background-color: white;
+}
+
+.create {
+    max-width: 600px;
+    width: 100%;
+}
+
+/* mas feo aun xD*/
+
+.login h2,
+.create h2 {
+    margin-bottom: 32px;
+    color: var(--gray-3);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form .input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+}
+@media (min-width: 600px) {
+    .form .input-container {
+        flex-direction: row-reverse;
+    }
+}
+
+.form .input {
+    width: 100%;
+}
+
+.form .input label {
+    display: block;
+    margin-bottom: 4px;
+    width: 100%;
+}
+
+.form .input input,
+.form .input select,
+.form .input textarea {
+    padding: 12px 16px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline-color: var(--main-color);
+    width: 100%;
+}
+
+.form .input textarea {
+    min-height: 160px;
+    min-width: 100%;
+    max-width: 100%;
+}
+
+.form .input select {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline-color: var(--main-color);
+}
+
+.error {
+    text-align: center;
+    color: red;
+    display: none;
+}
+.error.active {
+    display: block;
+}
+
+.success {
+    text-align: center;
+    color: rgb(30, 160, 26);
+    display: none;
+}
+.success.active {
+    display: block;
+}
+
+/** main content **/
+.main-content {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/** Aside **/
+.aside {
+    background-color: var(--gray-1);
+    box-sizing: border-box;
+    width: 350px;
+    position: relative;
+}
+
+.aside header {
+    padding: 12px 16px;
+    background-color: var(--gray-3);
+    height: 68px; /* esto no se hace xD... casos especiales */
+    display: flex;
+    align-items: center;
+}
+
+.aside header img {
+    width: 143px;
+}
+
+.aside .option a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 16px 24px;
+    color: white;
+    transition: all .1s ease-in-out;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.aside .option img {
+    width: 20px;
+}
+
+.aside .option a.active {
+    background-color: var(--gray-2);
+}
+
+.aside .option a:hover {
+    background-color: var(--gray-2);
+}
+
+.aside .sub-menu {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/** Main **/
+.main {
+    width: 100%;
+}
+
+.main header {
+    padding: 12px 16px;
+    background-color: #F1F5F9;
+    height: 68px; /* esto no se hace xD... casos especiales */
+    border-bottom: 1px solid #cbd5e1;
+}
+
+.main header .main-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 100%;
+    color: var(--gray-1);
+}
+
+.main header .main-title img {
+    width: 20px;
+}
+
+.main .main-content {
+    padding: 16px;
+    overflow-y: scroll;
+    height: calc(100vh - 68px);
+}
+
+.main .buy-register {
+    background-color: #F1F5F9;
+    border-radius: 8px;
+    width: 100%;
+    border: 1px solid #cbd5e1;
+}
+
+.main .buy-register header {
+    display: flex;
+    gap: 24px;
+    border-radius: 8px 8px 0px 0px;
+    border-bottom: none;
+}
+
+.main .buy-register .search {
+    outline: 2px solid transparent;
+    border-radius: 4px;
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 2px 16px;
+    background-color: white;
+    transition: all .1s;
+    border: 1px solid #cbd5e1;
+}
+
+.main .buy-register .search input {
+    padding: 8px 0;
+    font-size: 16px;
+    outline: none;
+    width: 100%;
+    border: none;
+}
+
+/** Buy register **/
+.table-content {
+    width: 100%;
+    /* overflow-x: scroll; */
+}
+
+.register-table {
+    border-bottom: 1px solid #cbd5e1;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.register-table thead tr th {
+    border: 1px solid #cbd5e1;
+    padding: 8px 8px;
+    font-size: 14px;
+    text-align: left;
+    color: var(--gray-3);
+    background-color: #e2e8f0;
+}
+
+.register-table thead tr th:first-of-type {
+    border-left: none;
+}
+
+.register-table thead tr th:last-of-type {
+    border-right: none;
+}
+
+.register-table tbody tr {
+    user-select: none;
+}
+
+.register-table tbody tr:hover {
+    background-color: #e0e6ec;
+}
+
+.register-table tbody tr td {
+    border: 1px solid #cbd5e1;
+    padding: 4px 8px;
+    font-size: 14px;
+    text-align: left;
+    color: var(--gray-1);
+}
+
+.register-table tbody tr td:first-of-type {
+    border-left: none;
+}
+
+.register-table tbody tr td:last-of-type {
+    border-right: none;
+}
+
+/** Mensaje de no hay items que mostrar **/
+#message {
+    text-align: center;
+    padding: 24px 0;
+}
