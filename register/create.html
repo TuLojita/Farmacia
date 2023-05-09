@@ -4,92 +4,51 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/assets/img/favicon.svg" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/main.css">
-    <title>Farmacia - Agregar Artículo</title>
+    <title>Farmacia - Crear Factura</title>
 </head>
 <body>
 
-    <div class="content-any">
-        <a href="http://127.0.0.1:5500">
-            <img src="/assets/img/Logo_color.svg" alt="logo">
-        </a>
-        <div class="create">
-            <h2>Agregar Artículo</h2>
-            <form class="form">
-                <div class="input-container">
-                    <div class="input">
-                        <label for="bill">Nº. Factura</label>
-                        <input id="bill" type="number" placeholder="Ej: 51561216588481">
+    <div class="div-base">
+        <div class="container">
+            <div class="factura">
+                <a href="http://127.0.0.1:5500/" class="factura-logo">
+                    <img src="/assets/img/Logo_color.svg" alt="logo">
+                </a>
+                <div class="factura-input-content">
+                    <div class="factura-input">
+                        <label for="nbill">Número de Factura</label>
+                        <input id="nbill" type="number" placeholder="Ej: 216400">
                     </div>
-                    <div class="input">
-                        <label for="registerData">F. Entrada</label>
-                        <input id="registerData" type="date">
-                    </div>
-                </div>
-                <div class="input-container">
-                    <div class="input">
-                        <label for="name">Nombre Medicamento</label>
-                        <input id="name" type="text" placeholder="Ej: Ibuprofeno Farma">
-                    </div>
-                    <div class="input">
-                        <label for="category">Categorías</label>
-                        <select id="category" name="rol">
-                            <option value="" disabled selected>-- Elije una categoría -- </option>
-                            <option id="rol" value="medicina">Medicina</option>
-                            <option id="rol" value="psicotropico">Psicotropico</option>
-                            <option id="rol" value="micelanios">Micelanios</option>
-                        </select>
+                    <div class="factura-input">
+                        <label for="startdate">Fecha de entrada</label>
+                        <input id="startdate" type="date">
                     </div>
                 </div>
-                <div class="input-container">
-                    <div class="input">
-                        <label for="description">Descripción</label>
-                        <textarea id="description" placeholder="Escribe una descripción"></textarea>
+                <div class="factura-input-content">
+                    <div class="factura-input">
+                        <label for="rif">RIF</label>
+                        <input id="rif" type="text" placeholder="Ej: J-21235064-0">
+                    </div>
+                    <div class="factura-input">
+                        <label for="name">Nombre del proveedor</label>
+                        <input id="name" type="text" placeholder="Ej: Farma">
                     </div>
                 </div>
-                <div class="input-container">
-                    <div class="input">
-                        <label for="laboratory">Laboratorio</label>
-                        <input id="laboratory" type="text" placeholder="Ej: Farma">
-                    </div>
-                    <div class="input">
-                        <label for="quantity">Cantidad</label>
-                        <input id="quantity" type="number" placeholder="Ej: 125">
-                    </div>
-                </div>
-                <div class="input-container">
-                    <div class="input">
-                        <label for="warehouse">Almacen</label>
-                        <input id="warehouse" type="text" placeholder="Ej: Almacen A">
-                    </div>
-                    <div class="input">
-                        <label for="unitCost">Costo Unitario</label>
-                        <input id="unitCost" type="number" placeholder="Ej: 5$">
+                <h2>Lotes</h2>
+                <div class="factura-lote">
+                    <div class="all-lotes"></div>
+                    <div class="add-lote">
+                        <button>
+                            <img src="/assets/img/icon/add_icon.svg" alt="add icon" />
+                        </button>
                     </div>
                 </div>
-                <div class="input-container">
-                    <div class="input">
-                        <label for="totalCost">Costo Total</label>
-                        <input id="totalCost" type="number" value="0" disabled>
-                    </div>
-                    <div class="input">
-                        <label for="dueDate">F. Vencimiento</label>
-                        <input id="dueDate" type="date">
-                    </div>
-                </div>
-                <div id="error" class="error"></div>
-                <div id="success" class="success"></div>
-                <button
-                    class="btn"
-                    id="add-medicine"
-                    type="submit"
-                >
-                    Agregar
-                </button>
-            </form>
+            </div>
         </div>
     </div>
 

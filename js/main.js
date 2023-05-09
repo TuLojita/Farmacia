@@ -1,5 +1,6 @@
 import { resetData, logoutUser } from "./auth.js";
-import { focusElement, idGenerate, randomNumber } from "./utils/index.js";
+import { lote } from "./ui/lote.js";
+import { focusElement, idGenerate, cleanNodeElement } from "./utils/index.js";
 
 /* Autenticación */
 const auth = [{
@@ -11,7 +12,7 @@ const users = [
     { name: 'admin', password: 'admin', rol: 'admin', login: false },
 ];
 
-if(JSON.parse(localStorage.getItem('auth')) === null && JSON.parse(localStorage.getItem('users')) === null) {
+if (JSON.parse(localStorage.getItem('auth')) === null && JSON.parse(localStorage.getItem('users')) === null) {
     resetData(auth, users);
 }
 
@@ -23,14 +24,14 @@ const urlRegister = 'http://127.0.0.1:5500/auth/register.html';
 const urlRegisterMedicine = 'http://127.0.0.1:5500/register/create.html';
 
 // Revisa la autenticación
-if(!getAuth[0].authtenticated) {
-    if(window.location.href !== urlLogin) {
+if (!getAuth[0].authtenticated) {
+    if (window.location.href !== urlLogin) {
         window.location.href = urlLogin;
     }
 } else {
-    const userAutenticated = getUsers.filter(user => user.login === true );
+    const userAutenticated = getUsers.filter(user => user.login === true);
 
-    if(userAutenticated.length === 0) {
+    if (userAutenticated.length === 0) {
         const updateAuth = [{
             authtenticated: false
         }];
@@ -39,7 +40,7 @@ if(!getAuth[0].authtenticated) {
         window.location.reload();
     }
 
-    if(userAutenticated.length > 1) {
+    if (userAutenticated.length > 1) {
 
         const updateUsers = [...getUsers];
 
@@ -62,14 +63,14 @@ if(!getAuth[0].authtenticated) {
 
 // Logout
 const btnLogout = document.querySelector("#logout");
-if(btnLogout !== null) {
-    btnLogout.addEventListener('click', function(e) {
+if (btnLogout !== null) {
+    btnLogout.addEventListener('click', function (e) {
         logoutUser(getUsers);
     });
 }
 
 // Login 
-if(window.location.href === urlLogin) {
+if (window.location.href === urlLogin) {
     const btnSubmit = document.querySelector("#submit");
     const inputName = document.querySelector("#name");
     const inputPassword = document.querySelector("#pass");
@@ -78,17 +79,17 @@ if(window.location.href === urlLogin) {
     let errorMessage = '';
 
     // Retringir acceso a usuarios autenticados
-    const userAutenticated = getUsers.filter(user => user.login === true );
-    if(userAutenticated.length > 0) {
+    const userAutenticated = getUsers.filter(user => user.login === true);
+    if (userAutenticated.length > 0) {
         window.location.href = urlHome;
     }
 
     // autenticar usuario
-    btnSubmit.addEventListener('click', function(e) {
+    btnSubmit.addEventListener('click', function (e) {
         e.preventDefault();
 
         // comprobando que los inputs no esten vacios
-        if(inputName.value === '') {
+        if (inputName.value === '') {
             error = true;
             errorMessage = 'El nombre es obligatorio';
             showError.innerHTML = errorMessage;
@@ -97,7 +98,7 @@ if(window.location.href === urlLogin) {
             return;
         }
 
-        if(inputPassword.value === '') {
+        if (inputPassword.value === '') {
             error = true;
             errorMessage = 'La contraseña es obligatoria';
             showError.innerHTML = errorMessage;
@@ -105,11 +106,11 @@ if(window.location.href === urlLogin) {
             setTimeout(() => { showError.classList.remove('active'); }, 2000);
             return;
         }
-        
+
         // consultando el valor del input con el de localstorage
         const user = getUsers.find(user => user.name === inputName.value);
 
-        if( !user ) {
+        if (!user) {
             localStorage.setItem('auth', JSON.stringify(auth));
             error = true;
             errorMessage = 'Este usuario no existe';
@@ -120,7 +121,7 @@ if(window.location.href === urlLogin) {
         }
 
         // validando contraseña
-        if(inputPassword.value !== user.password) {
+        if (inputPassword.value !== user.password) {
             localStorage.setItem('auth', JSON.stringify(auth));
             error = true;
             errorMessage = 'La contraseña es incorrecta';
@@ -138,7 +139,7 @@ if(window.location.href === urlLogin) {
         // guardando usuario con login en true
         const updateUsers = [...getUsers];
         updateUsers.map(userUpdate => {
-            if(userUpdate.name === user.name) {
+            if (userUpdate.name === user.name) {
                 userUpdate.login = true;
             }
         })
@@ -146,7 +147,7 @@ if(window.location.href === urlLogin) {
         const updateAuth = [{
             authtenticated: true
         }];
-        
+
         // actualizando localstorage
         localStorage.setItem('auth', JSON.stringify(updateAuth));
         localStorage.setItem('users', JSON.stringify(updateUsers));
@@ -155,7 +156,7 @@ if(window.location.href === urlLogin) {
 }
 
 // Home 
-if(window.location.href === urlHome) {
+if (window.location.href === urlHome || window.location.href === urlHome+"index.html") {
 
     // Columnas dinamiscas de la tabla
     const getItems = JSON.parse(localStorage.getItem('items'));
@@ -163,24 +164,32 @@ if(window.location.href === urlHome) {
     const noItemsMessage = document.querySelector("#message");
     const findInput = document.querySelector("#find");
 
+    if (getItems === null) {
+        localStorage.setItem('items', JSON.stringify([]));
+    }
+
     let listitems = [...getItems];
 
+    // Buscador
     findInput.addEventListener('input', (e) => {
-        
-        while (itemsList.firstChild) {
-            itemsList.removeChild(itemsList.lastChild);
-        }
 
-        if(findInput.value !== "") {
+        cleanNodeElement(itemsList);
+
+        if (findInput.value !== "") {
             listitems = getItems.filter(find => find.name.toLowerCase().includes(findInput.value.toLowerCase()));
         }
 
-        createListItems(listitems);
+        if(findInput.value.length !== 0) {
+            createListTable(listitems);
+        } else {
+            createListTable(getItems);
+        }
+
     });
 
-    function createListItems(list) {
-    if(list !== null) {
-        list.map(item => {
+    const createListTable = (list) => {
+        if (list.length !== 0) {
+            list.map(item => {
                 const tr = document.createElement("tr");
                 const tdId = document.createElement("td");
                 const tdBill = document.createElement("td");
@@ -226,11 +235,13 @@ if(window.location.href === urlHome) {
             noItemsMessage.innerHTML = "No hay nada que mostrar"
         }
     }
-    createListItems(listitems);
+
+    createListTable(listitems);
+
 }
 
 // Register
-if(window.location.href === urlRegister) {
+if (window.location.href === urlRegister) {
     const btnSubmit = document.querySelector("#submit");
     const inputName = document.querySelector("#name");
     const inputPassword = document.querySelector("#pass");
@@ -241,17 +252,17 @@ if(window.location.href === urlRegister) {
     let errorMessage = '';
 
     // Retringir acceso a usuarios tipo user
-    const userAutenticated = getUsers.filter(user => user.login === true );
-    if(userAutenticated[0].rol === "user") {
+    const userAutenticated = getUsers.filter(user => user.login === true);
+    if (userAutenticated[0].rol === "user") {
         window.location.href = urlHome;
     }
 
     // Crear usuario
-    btnSubmit.addEventListener('click', function(e) {
+    btnSubmit.addEventListener('click', function (e) {
         e.preventDefault();
 
         // Validación de formularios
-        if(inputName.value === '') {
+        if (inputName.value === '') {
             error = true;
             errorMessage = 'El nombre es obligatorio';
             showError.innerHTML = errorMessage;
@@ -260,7 +271,7 @@ if(window.location.href === urlRegister) {
             return;
         }
 
-        if(inputPassword.value === '') {
+        if (inputPassword.value === '') {
             error = true;
             errorMessage = 'La contraseña es obligatoria';
             showError.innerHTML = errorMessage;
@@ -269,7 +280,7 @@ if(window.location.href === urlRegister) {
             return;
         }
 
-        if(inputPassword.value.length < 8) {
+        if (inputPassword.value.length < 8) {
             error = true;
             errorMessage = 'La contraseña debe tener al menos 8 caracteres';
             showError.innerHTML = errorMessage;
@@ -278,7 +289,7 @@ if(window.location.href === urlRegister) {
             return;
         }
 
-        if(selectRol.value === '') {
+        if (selectRol.value === '') {
             error = true;
             errorMessage = 'El tipo de usuario es obligatorio';
             showError.innerHTML = errorMessage;
@@ -290,7 +301,7 @@ if(window.location.href === urlRegister) {
         // validando si el usuario existe
         const registerUser = getUsers.find(user => user.name === inputName.value);
 
-        if(inputName.value === registerUser?.name) {
+        if (inputName.value === registerUser?.name) {
             error = true;
             errorMessage = 'Ya existe un usuario con este nombre';
             showError.innerHTML = errorMessage;
@@ -306,7 +317,7 @@ if(window.location.href === urlRegister) {
 
         // Creando y guardando nuevo usuario
         const updateUsers = [...getUsers];
-        updateUsers.push({name: inputName.value, password: inputPassword.value, rol: selectRol.value, login: false});
+        updateUsers.push({ name: inputName.value, password: inputPassword.value, rol: selectRol.value, login: false });
         localStorage.setItem('users', JSON.stringify(updateUsers));
 
         // Pasando mensage de que el usuario de creo
@@ -322,7 +333,7 @@ if(window.location.href === urlRegister) {
 }
 
 // Items register
-if(window.location.href === urlRegisterMedicine) {
+if (window.location.href === urlRegisterMedicine) {
     const registerData = document.querySelector("#registerData");
     const bill = document.querySelector("#bill");
     const category = document.querySelector("#category");
@@ -341,179 +352,17 @@ if(window.location.href === urlRegisterMedicine) {
     let error = false;
     let errorMessage = '';
 
-    console.log(getItems);
-
-    if(getItems === null) {
-        localStorage.setItem('items', JSON.stringify([]));
-    }
-
-    // Retringir acceso a usuarios tipo user
-    const userAutenticated = getUsers.filter(user => user.login === true );
-    if(userAutenticated[0].rol === "user") {
-        window.location.href = urlHome;
-    }
-
-    // detectando cambios en costo unitario
-    quantity.addEventListener("input", (event) => {
-        if(quantity !== '' && unitCost !== "") {
-            totalCost.value = quantity.value * unitCost.value;
-        }
-    });
-    unitCost.addEventListener("input", (event) => {
-        if(quantity !== '' && unitCost !== "") {
-            totalCost.value = quantity.value * unitCost.value;
-        }
-    });
-
-    // Crear medicamento
-    addMedicine.addEventListener('click', function(e) {
-        e.preventDefault();
-
-        console.log(getItems)
-
-        // Validación de formularios
-        if(registerData.value === '') {
-            error = true;
-            errorMessage = 'La fecha de entrada es obligatoria';
-            showError.innerHTML = errorMessage;
-            showError.classList.add('active');
-            setTimeout(() => { showError.classList.remove('active'); }, 2000);
-            return;
-        }
-
-        if(bill.value === '') {
-            error = true;
-            errorMessage = 'El número de factura es obligatorio';
-            showError.innerHTML = errorMessage;
-            showError.classList.add('active');
-            setTimeout(() => { showError.classList.remove('active'); }, 2000);
-            return;
-        }
-
-        if(category.value.length < 8) {
-            error = true;
-            errorMessage = 'La categoría es obligatoria';
-            showError.innerHTML = errorMessage;
-            showError.classList.add('active');
-            setTimeout(() => { showError.classList.remove('active'); }, 3000);
-            return;
-        }
-
-        if(name.value === '') {
-            error = true;
-            errorMessage = 'El nombre de medicamento es obligatorio';
-            showError.innerHTML = errorMessage;
-            showError.classList.add('active');
-            setTimeout(() => { showError.classList.remove('active'); }, 2000);
-            return;
-        }
-
-        if(description.value === '') {
-            error = true;
-            errorMessage = 'La descripción es obligatoria';
-            showError.innerHTML = errorMessage;
-            showError.classList.add('active');
-            setTimeout(() => { showError.classList.remove('active'); }, 2000);
-            return;
-        }
-
-        if(quantity.value === '') {
-            error = true;
-            errorMessage = 'La cantidad es obligatoria';
-            showError.innerHTML = errorMessage;
-            showError.classList.add('active');
-            setTimeout(() => { showError.classList.remove('active'); }, 2000);
-            return;
-        }
-
-        if(laboratory.value === '') {
-            error = true;
-            errorMessage = 'El laboratorio es obligatorio';
-            showError.innerHTML = errorMessage;
-            showError.classList.add('active');
-            setTimeout(() => { showError.classList.remove('active'); }, 2000);
-            return;
-        }
-
-        if(unitCost.value === '') {
-            error = true;
-            errorMessage = 'El costo unitario es obligatorio';
-            showError.innerHTML = errorMessage;
-            showError.classList.add('active');
-            setTimeout(() => { showError.classList.remove('active'); }, 2000);
-            return;
-        }
-
-        if(warehouse.value === '') {
-            error = true;
-            errorMessage = 'El almacen es obligatorio';
-            showError.innerHTML = errorMessage;
-            showError.classList.add('active');
-            setTimeout(() => { showError.classList.remove('active'); }, 2000);
-            return;
-        }
-
-        if(dueDate.value === '') {
-            error = true;
-            errorMessage = 'La fecha de vencimiento es obligatoria';
-            showError.innerHTML = errorMessage;
-            showError.classList.add('active');
-            setTimeout(() => { showError.classList.remove('active'); }, 2000);
-            return;
-        }
-
-        if(totalCost.value === '') {
-            error = true;
-            errorMessage = 'El costo total es obligatorio';
-            showError.innerHTML = errorMessage;
-            showError.classList.add('active');
-            setTimeout(() => { showError.classList.remove('active'); }, 2000);
-            return;
-        }
-
-        // reseteando errores
-        error = false;
-        errorMessage = '';
-        showError.classList.remove('active');
-
-        // Creando y guardando nuevo articulo
-        
-        let updateItems = [...getItems];
-        updateItems.push(
-            {
-                id: idGenerate(),
-                registerData: registerData.value,
-                bill: bill.value,
-                category: category.value,
-                name: name.value,
-                description: description.value,
-                quantity: quantity.value,
-                laboratory: laboratory.value,
-                unitCost: unitCost.value,
-                warehouse: warehouse.value,
-                dueDate: dueDate.value,
-                totalCost: totalCost.value,
-            }
-        );
-        localStorage.setItem('items', JSON.stringify(updateItems));
-
-        // Pasando mensage de que el usuario de creo
-        errorMessage = `El articulo ${name.value} se creo correctamente`;
-        showSuccess.innerHTML = errorMessage;
-        showSuccess.classList.add('active');
-        setTimeout(() => {
-            errorMessage = '';
-            showSuccess.classList.remove('active');
-            window.location.reload();
-        }, 3000);
-
-    });
+    
 }
 
 // Test
 const search = document.querySelector("#search");
 const colorFocus = "#F87171"
-if(search !== null) focusElement(search, colorFocus);
+if (search !== null) focusElement(search, colorFocus);
 
 //Test 2
+const allLotes = document.querySelector(".all-lotes");
 
+for(let i = 0; i < 2; i++) {
+    lote(allLotes)
+}
