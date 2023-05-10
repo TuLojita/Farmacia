@@ -1,3 +1,5 @@
+import { idGenerate } from "../utils/index.js";
+
 export const lote = (inner) => {
     const loteContent = document.createElement("div");
     const loteContentBody1 = document.createElement("div");
@@ -51,6 +53,7 @@ export const lote = (inner) => {
     const closeImage = document.createElement("img");
 
     loteContent.className = "lote-content";
+    loteContent.id = idGenerate();
     loteContentBody1.className = "lote-content-body";
     loteContentBody2.className = "lote-content-body";
     loteContentBody3.className = "lote-content-body";
@@ -147,7 +150,6 @@ export const lote = (inner) => {
     inputLote.placeholder = "Ej: 215145";
 
     closeBtn.className = "close-btn";
-    closeBtn.id = "close-btn";
     closeImage.src = "/assets/img/icon/add_icon.svg";
     closeImage.alt = "add icon"
 

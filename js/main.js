@@ -332,29 +332,6 @@ if (window.location.href === urlRegister) {
     });
 }
 
-// Items register
-if (window.location.href === urlRegisterMedicine) {
-    const registerData = document.querySelector("#registerData");
-    const bill = document.querySelector("#bill");
-    const category = document.querySelector("#category");
-    const name = document.querySelector("#name");
-    const description = document.querySelector("#description");
-    const quantity = document.querySelector("#quantity");
-    const laboratory = document.querySelector("#laboratory");
-    const unitCost = document.querySelector("#unitCost");
-    const warehouse = document.querySelector("#warehouse");
-    const dueDate = document.querySelector("#dueDate");
-    const totalCost = document.querySelector("#totalCost");
-    const addMedicine = document.querySelector("#add-medicine");
-    const showError = document.querySelector("#error");
-    const showSuccess = document.querySelector("#success");
-    const getItems = JSON.parse(localStorage.getItem('items'));
-    let error = false;
-    let errorMessage = '';
-
-    
-}
-
 // Test
 const search = document.querySelector("#search");
 const colorFocus = "#F87171"
@@ -362,7 +339,27 @@ if (search !== null) focusElement(search, colorFocus);
 
 //Test 2
 const allLotes = document.querySelector(".all-lotes");
+const loteContent = document.getElementsByClassName("lote-content");
+const closeBtn = document.getElementsByClassName("close-btn");
+const addLote = document.querySelector("#add-lote");
 
-for(let i = 0; i < 2; i++) {
-    lote(allLotes)
+let lotesQuantity = 1;
+addLote.addEventListener("click", (e) => {
+    lotesQuantity += 1;
+    renderNewLote(lotesQuantity);
+});
+
+// Lote rendering test
+const renderNewLote = (value) => {
+    for(let i = 0; i < value; i++) {
+        lote(allLotes);
+    }
+}
+
+renderNewLote(lotesQuantity);
+
+for (let i = 0; i < loteContent.length; i++) {
+    closeBtn[i].addEventListener('click', (e) => {
+        console.log(loteContent[i].id);
+    });
 }
