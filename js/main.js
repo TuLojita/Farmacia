@@ -343,23 +343,26 @@ const loteContent = document.getElementsByClassName("lote-content");
 const closeBtn = document.getElementsByClassName("close-btn");
 const addLote = document.querySelector("#add-lote");
 
-let lotesQuantity = 1;
+const updateLotes = () => {
+    const saveData = [...loteContent];
+    return saveData;
+}
+
 addLote.addEventListener("click", (e) => {
-    lotesQuantity += 1;
-    renderNewLote(lotesQuantity);
+    const saveData = [...loteContent];
+    cleanNodeElement(allLotes);
+    saveData.map(element => {
+        allLotes.appendChild(element);
+    })
+    lote(allLotes);
 });
 
 // Lote rendering test
-const renderNewLote = (value) => {
-    for(let i = 0; i < value; i++) {
-        lote(allLotes);
-    }
-}
-
-renderNewLote(lotesQuantity);
+lote(allLotes);
 
 for (let i = 0; i < loteContent.length; i++) {
     closeBtn[i].addEventListener('click', (e) => {
         console.log(loteContent[i].id);
+        console.log(loteContent)
     });
 }
